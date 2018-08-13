@@ -5,9 +5,9 @@ class BooksController < ApplicationController
   # GET /books
   # GET /books.json
   def index
-    @books = Book.all
-    @users = User.all
-    @book_categories = BookCategory.all.includes(:book, :category)
+    @books = Book.limit(10)
+    @users = User.limit(10)
+    @book_categories = BookCategory.limit(10).includes(:book, :category)
 
   end
 
