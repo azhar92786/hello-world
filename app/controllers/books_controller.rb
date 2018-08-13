@@ -14,7 +14,7 @@ class BooksController < ApplicationController
   # GET /books/1
   # GET /books/1.json
   def show
-    # comment
+
   end
 
   # GET /books/new
@@ -67,7 +67,7 @@ class BooksController < ApplicationController
   end
 
   def book_by_category
-    @books = Book.all.where(id: params[:book_id])
+    @books = Book.limit(2).where(id: params[:book_id])
     render partial: 'book_by_category'
     #render :inline params[:id]
   end

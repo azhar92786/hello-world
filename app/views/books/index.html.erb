@@ -4,15 +4,17 @@
 
 <table>
 <h2>search by book categories</h2>
+
     <tbody>
     <% @book_categories.each do |bookcategory| %>
       <tr>
-        <td><%= link_to bookcategory.category.name , categories_path %></td>
-        <%= link_to 'edit', book_book_by_category_path(bookcategory.book)%>
-
+        <%= link_to bookcategory.category.name , book_book_by_category_path(bookcategory.book)%>
+        <br>
       </tr>
     <% end %>
     </tbody>
+
+
 </table>
 
 <table>

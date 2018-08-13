@@ -22,6 +22,7 @@
 <%= link_to 'Edit', edit_book_path(@book) %> |
 <%= link_to 'Back', books_path %>
 
+
 <h2>Comments</h2>
 <% @book.comments.each do |comment| %>
   <p>
@@ -55,4 +56,6 @@
   <p>
     <%= form.submit %>
   </p>
+
+
 <% end %>
