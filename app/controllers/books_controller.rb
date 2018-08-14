@@ -5,16 +5,14 @@ class BooksController < ApplicationController
   # GET /books
   # GET /books.json
   def index
-    @books = Book.limit(10)
+    @books = Book.paginate(:page => params[:page], :per_page =>2)
+    @Categories = Category.limit(10)
     @users = User.limit(10)
-    @book_categories = BookCategory.limit(10).includes(:book, :category)
-
-  end
+   end
 
   # GET /books/1
   # GET /books/1.json
   def show
-
   end
 
   # GET /books/new
@@ -67,9 +65,11 @@ class BooksController < ApplicationController
   end
 
   def book_by_category
-    @books = Book.limit(2).where(id: params[:book_id])
-    render partial: 'book_by_category'
-    #render :inline params[:id]
+    @Categories = Category.limit(10)
+   # @books = Book.limit(@@limit).where(category_id: params[:book_id])
+    @books = Book.paginate(:page => params[:page], :per_page =>2).where(category_id: params[:book_id])
+    render 'index'
+       
   end
 
   private
@@ -80,7 +80,7 @@ class BooksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_params    
-      params.require(:book).permit(:title, :description, :image, :borrower)
+      params.require(:book).permit(:title, :description, :image, :borrower, :category_id)
     end
 
 end

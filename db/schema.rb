@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_09_074555) do
+ActiveRecord::Schema.define(version: 2018_08_13_111934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,8 @@ ActiveRecord::Schema.define(version: 2018_08_09_074555) do
     t.string "borrower"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_books_on_category_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -82,5 +84,6 @@ ActiveRecord::Schema.define(version: 2018_08_09_074555) do
 
   add_foreign_key "book_categories", "books"
   add_foreign_key "book_categories", "categories"
+  add_foreign_key "books", "categories"
   add_foreign_key "comments", "books"
 end

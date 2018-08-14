@@ -1,5 +1,7 @@
 class Book < ApplicationRecord
     has_many :comments
+    has_many :categories, dependent: :nullify
+
     has_many :book_categories
     mount_uploader :image, ImageUploader
     validates :image, presence: true

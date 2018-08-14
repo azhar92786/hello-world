@@ -78,6 +78,7 @@ gem 'inherited_resources', github: 'activeadmin/inherited_resources'
 
 gem 'filterrific'
 
+gem 'will_paginate', '> 3.0'
 
 
 
