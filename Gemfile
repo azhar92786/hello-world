@@ -67,18 +67,13 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'carrierwave', '~> 0.10.0'
 gem 'mini_magick', '~> 4.3'
-gem 'activeadmin'
+#gem 'activeadmin'
 
 # Plus integrations with:
 gem 'devise'
-gem 'cancan' # or cancancan
-gem 'draper'
-gem 'pundit'
-gem 'inherited_resources', github: 'activeadmin/inherited_resources'
-
-gem 'filterrific'
 
 gem 'will_paginate', '> 3.0'
+
 
 
 

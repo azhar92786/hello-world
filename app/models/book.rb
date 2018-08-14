@@ -11,8 +11,8 @@ class Book < ApplicationRecord
     where(title: [*titles])
     }
 
-    ActiveAdmin.register Book do
-        filter :title
-    end
-   #jfdnewqkjfnre
+#     ActiveAdmin.register Book do
+#         filter :title
+#     end
+#    #jfdnewqkjfnre
 end
