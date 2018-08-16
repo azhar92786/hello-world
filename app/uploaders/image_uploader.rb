@@ -1,11 +1,8 @@
 # encoding: utf-8
 
 class ImageUploader < CarrierWave::Uploader::Base
-  
-  #for Heroku 
-  def cache_dir
-    "#{Rails.root}/tmp/uploads"
-  end
+  include Cloudinary::CarrierWave
+ 
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick

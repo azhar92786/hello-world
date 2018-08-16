@@ -65,7 +65,11 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+#Image management
 gem 'carrierwave', '~> 0.10.0'
+gem 'cloudinary'
+
+
 gem 'mini_magick', '~> 4.3'
 #gem 'activeadmin'
 
@@ -74,6 +78,7 @@ gem 'devise'
 
 gem 'will_paginate', '> 3.0'
 
+#log gem
 gem 'le'
 
 
