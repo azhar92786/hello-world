@@ -27,9 +27,8 @@ class CommentsController < ApplicationController
   def create
     @book = Book.find(params[:book_id])
     @comment = @book.comments.create(comment_params)
+    @comment.commenter = current_user.email
     
-
-
     respond_to do |format|
       if @comment.save
         format.html { redirect_to @book, notice: 'Comment was successfully created.' }

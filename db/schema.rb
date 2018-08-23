@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_13_111934) do
+ActiveRecord::Schema.define(version: 2018_08_21_053126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,13 +29,16 @@ ActiveRecord::Schema.define(version: 2018_08_13_111934) do
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
   end
 
-  create_table "book_categories", force: :cascade do |t|
-    t.bigint "book_id"
-    t.bigint "category_id"
+  create_table "admin_users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["book_id"], name: "index_book_categories_on_book_id"
-    t.index ["category_id"], name: "index_book_categories_on_category_id"
+    t.index ["email"], name: "index_admin_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
   create_table "books", force: :cascade do |t|
@@ -45,8 +48,14 @@ ActiveRecord::Schema.define(version: 2018_08_13_111934) do
     t.string "borrower"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "category_id"
-    t.index ["category_id"], name: "index_books_on_category_id"
+    t.index ["id"], name: "index_books_on_id"
+  end
+
+  create_table "books_categories", id: false, force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.bigint "category_id", null: false
+    t.index ["book_id", "category_id"], name: "index_books_categories_on_book_id_and_category_id"
+    t.index ["category_id", "book_id"], name: "index_books_categories_on_category_id_and_book_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -63,6 +72,28 @@ ActiveRecord::Schema.define(version: 2018_08_13_111934) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["book_id"], name: "index_comments_on_book_id"
+  end
+
+  create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
+    t.string "slug", null: false
+    t.integer "sluggable_id", null: false
+    t.string "sluggable_type", limit: 50
+    t.string "scope"
+    t.datetime "created_at"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
+    t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  end
+
+  create_table "logs", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "description"
+    t.bigint "book_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_logs_on_book_id"
+    t.index ["user_id"], name: "index_logs_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -82,8 +113,7 @@ ActiveRecord::Schema.define(version: 2018_08_13_111934) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "book_categories", "books"
-  add_foreign_key "book_categories", "categories"
-  add_foreign_key "books", "categories"
   add_foreign_key "comments", "books"
+  add_foreign_key "logs", "books"
+  add_foreign_key "logs", "users"
 end

@@ -5,9 +5,12 @@ class BooksController < ApplicationController
   # GET /books
   # GET /books.json
   def index
-    @books = Book.paginate(:page => params[:page], :per_page =>3)
-    @Categories = Category.limit(10)
-    @users = User.limit(10)
+
+    @books = Book.limit(100)
+    @books = @books.joins(:categories).where(categories: {id: params[:category][:category_id]})  if params.include? :category
+    @books = @books.where("title LIKE ? ",  "%#{params[:search]}%" )  if params.include? :search
+    @categories = Category.limit(100).pluck(:name, :id)
+    
    end
 
   # GET /books/1
@@ -18,6 +21,7 @@ class BooksController < ApplicationController
   # GET /books/new
   def new
     @book = Book.new
+    @categories = Category.limit(100)
   end
 
   # GET /books/1/edit
@@ -27,13 +31,16 @@ class BooksController < ApplicationController
   # POST /books
   # POST /books.json
   def create
+
     @book = Book.new(book_params)
+    set_categories
 
     respond_to do |format|
       if @book.save
         format.html { redirect_to @book, notice: 'Book was successfully created.' }
         format.json { render :show, status: :created, location: @book }
       else
+        @categories = Category.limit(100)
         format.html { render :new }
         format.json { render json: @book.errors, status: :unprocessable_entity }
       end
@@ -43,10 +50,12 @@ class BooksController < ApplicationController
   # PATCH/PUT /books/1
   # PATCH/PUT /books/1.json
   def update
+    @book.categories.clear
+    set_categories
     respond_to do |format|
       if @book.update(book_params)
         format.html { redirect_to @book, notice: 'Book was successfully updated.' }
-        format.json { render :show, status: :ok, location: @book }
+        format.json { render :show, status:ok, location: @b%ook }
       else
         format.html { render :edit }
         format.json { render json: @book.errors, status: :unprocessable_entity }
@@ -64,23 +73,53 @@ class BooksController < ApplicationController
     end
   end
 
+  def borrow
+   @book = Book.find(params[:book_id])
+   @book.update_attribute(:borrower, current_user.email)
+   # Tell the UserMailer to send a welcome email after save
+   UserMailer.with(user: current_user, book: @book).welcome_email.deliver_later
+   
+   ManageBorrowersJob.perform_later 
+   redirect_to books_url
+  end
+
+  def return
+   @book = Book.find(params[:book_id])
+   @book.update_attribute(:borrower, nil)
+   redirect_to books_url
+  end
+
+  def email_query
+    @book = Book.find(params[:book_id])
+    UserMailer.with(borrower: @book.borrower, book: @book, querier: current_user).enquiry_email.deliver_later
+    redirect_to books_url
+  end
+
   def book_by_category
-    @Categories = Category.limit(10)
-   # @books = Book.limit(@@limit).where(category_id: params[:book_id])
-    @books = Book.paginate(:page => params[:page], :per_page =>2).where(category_id: params[:book_id])
+    @categories = Category.limit(100)
+    @books = Book.limit(100).where('categories.id': 2)
     render 'index'
-       
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_book
       @book = Book.find(params[:id])
+      @categories = Category.limit(100)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_params    
-      params.require(:book).permit(:title, :description, :image, :borrower, :category_id)
+     params.require(:book).permit(:title, :description, :image, :borrower, :categories)
+    #params.require(:book).permit(:title, :description, :image, :borrower)
+    end
+
+    def set_categories
+      if params[:book][:categories]
+        params[:book][:categories].each do |c|
+            @book.categories << Category.find(c.to_i) 
+        end  
+      end
     end
 
 end

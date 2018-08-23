@@ -1,5 +1,4 @@
 class Category < ApplicationRecord
-    has_many :book_categories
-    has_many :books, through: :book_categories
+    has_and_belongs_to_many :books
     
 end

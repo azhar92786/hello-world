@@ -20,11 +20,19 @@
     <%= form.label :description %>
     <%= form.text_area :description %>
   </div>
+ 
+  <% if false %>
+      <div class="field">
+          <%= form.label :category_id %>
+          <%= form.collection_select(book.category, Category.all, :id, :name, :include_blank => true) %>
+        </div> 
+  <% end %>
 
-  <div class="field">
-    <%= form.label :category_id %>
-    <%= form.collection_select(:category_id, Category.all, :id, :name, :include_blank => true) %>
-  </div>
+  <% @categories.each do |c| %>
+    <%= form.label c.name, {for: "book_categories_#{c.id}"}  %>
+    <%  pa = @book.category_ids.include?(c.id) ?  {multiple: true, checked: true} : {multiple: true} %>
+    <%= form.check_box 'categories', pa, c.id, nil   %>
+  <% end %>
 
   <div class="field">
     <%= form.label :image %>
@@ -37,10 +45,6 @@
 
   </div>
 
-  <div class="field">
-    <%= form.label  :borrower %><br />
-    <%= form.collection_select(:borrower, User.all, :id, :email, :include_blank => true) %>
-  </div>
 
   <div class="actions">
     <%= form.submit %>

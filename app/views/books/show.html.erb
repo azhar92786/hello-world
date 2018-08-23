@@ -6,12 +6,12 @@
 
 <p>
   <strong>Description:</strong>
-  <%= @book.description %>
+  <%= @book.categories.count %>
 </p>
 
 <p>
   <strong>Image:</strong>
-  <%= image_tag @book.image.url %>
+  <%= image_tag @book.image.thumb.url %>
 </p>
 
 <p>

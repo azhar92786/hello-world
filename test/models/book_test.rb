@@ -1,7 +1,17 @@
 require 'test_helper'
 
 class BookTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+   test "should not save Book without title" do
+        book = Book.new
+        assert_not book.save, "Saved the book without a title"
+    end
+
+   
+    test "should report error" do
+        # some_undefined_variable is not defined elsewhere in the test case
+        assert_raises(NameError) do
+        some_undefined_variable
+        end
+    end
+    
 end

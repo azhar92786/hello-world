@@ -67,7 +67,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 #Image management
 gem 'carrierwave', '~> 0.10.0'
-gem 'cloudinary'
+#gem 'cloudinary'
 
 
 gem 'mini_magick', '~> 4.3'
@@ -76,10 +76,22 @@ gem 'mini_magick', '~> 4.3'
 # Plus integrations with:
 gem 'devise'
 
-gem 'will_paginate', '> 3.0'
+
 
 #log gem
 gem 'le'
+
+# active admin
+gem 'activeadmin'
+
+#gem 'will_paginate'
+#gem 'kaminari'
+
+# can can
+gem 'cancan'
+
+# #for 'friendly' URLs
+# gem 'friendly_id', '~> 5.2.0'
 
 
 

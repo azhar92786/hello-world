@@ -1,26 +1,36 @@
-<table>
-<h2>search by book categories</h2>
-    <tbody>
-    <% @Categories.each do |category| %>
-      <tr>
-        <%= link_to category.name , book_book_by_category_path(category)%>
-        <br>
-      </tr>
-    <% end %>
-      <tr>
-        <%= link_to 'All' , books_path%>
-      </tr>
-    </tbody>
-</table>
+<h2>Filter by categories</h2>
+<% if false %> 
+    <ul>
+      <% @categories.each do |category| %>
+        <li>
+          <%= link_to category.name, book_book_by_category_path(category)%>  
+        </li>
+      <% end %>
+    </ul>
 
-<table>
+    <%= select("book_book_by_category", "category_id", @categories) %>
+ <% end %>
+
+ <%= form_tag(books_path, method: "get") do %>
+  <%= label_tag(:q, "Filter books by:") %>
+  <%= select("category", "category_id", @categories) %>
+  <%= submit_tag("Filter") %>
+ <% end %>
+
+ <h2>Search</h2>
+ <%= form_tag(books_path, method: "get") do %>
+  <%= label_tag(:q, "Search for:") %>
+    <%= text_field_tag :search %>
+  <%= submit_tag("search") %>
+ <% end %>
+
 <h2>List of all books</h2>
+<table>
   <thead>
     <tr>
       <th>Title</th>
       <th>Image</th>
       <th>Borrower</th>
-      <th>Category</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -32,21 +42,15 @@
         <td><%= book.title %></td>
         <td><%= image_tag book.image.thumb.url %></td>
         <td><%= book.borrower%></td>
-        <td><%= book.category_id%></td>
         <td><%= link_to 'Show', book %></td>
         <td><%= link_to 'Edit', edit_book_path(book) %></td>
-        <td><%= link_to 'Destroy', book_path(book), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        
-
-        </tr>
+        <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= button_to "Borrow", book_borrow_path(book), method: :patch if !book.borrower %></td>
+        <td><%= button_to "Return", book_return_path(book), method: :patch if book.borrower == current_user.email%></td>
+        <td><%= button_to "Enquire with borrower", book_email_query_path(book), method: :get if (book.borrower != current_user.email) && (book.borrower != nil)%></td>        </tr>
     <% end %>
   </tbody>
 </table>
-
-<%= will_paginate @books, previous_label: h("<"), next_label: h(">") %>
-
-
-<br>
 
 
 <%= link_to 'New Book', new_book_path %>

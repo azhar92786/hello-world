@@ -1,18 +1,35 @@
 class Book < ApplicationRecord
-    has_many :comments
-    has_many :categories, dependent: :nullify
+    # extend FriendlyId
+    # friendly_id: :title, use: :slugged
 
-    has_many :book_categories
-    mount_uploader :image, ImageUploader
+    
     validates :image, presence: true
+    validates :title, presence: true
+    validates_uniqueness_of :title
+    has_many :comments, dependent: :delete_all
+    has_many :logs, dependent: :delete_all
+    has_and_belongs_to_many :categories
 
-    # filters on 'country_id' foreign key
-    scope :with_title, lambda { |titles|
-    where(title: [*titles])
-    }
+    mount_uploader :image, ImageUploader
 
-#     ActiveAdmin.register Book do
-#         filter :title
-#     end
-#    #jfdnewqkjfnre
-end
+    default_scope { order(id: :desc) } 
+    
+    #constants...
+    LIMIT = 100
+
+  
+
+    after_update do |book|
+        
+        p '----------------------------------------'
+        p User.current.id
+        p '--------------------------------------------'
+
+        if borrower.nil?
+            Log.create(user_id: User.current.id, description: "Returned" , book_id: book.id.to_i)
+        else
+            Log.create(user_id: User.current.id, description: "Borrowed" , book_id: book.id.to_i)
+        end
+    end
+
+ end
