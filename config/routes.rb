@@ -1,25 +1,26 @@
 Rails.application.routes.draw do
-  
-  resources :logs
-  devise_for :admin_users, ActiveAdmin::Devise.config
+   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   devise_for :users
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
   end
 
-
    #ActiveAdmin::Devise.config
-  
+  resources :logs
   resources :categories
-  resources :comments
- 
   resources :books do
-    resources :comments
+    resources :comments, shallow: true
     get :book_by_category  
     get :email_query  
     patch :borrow
     patch :return
+  end
+
+  namespace :api do
+    namespace :v1 do
+    resources :books
+    end
   end
 
   #get "bookscategory", to: "books#book_by_category"

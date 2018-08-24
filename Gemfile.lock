@@ -106,8 +106,6 @@ GEM
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
     formtastic_i18n (0.6.0)
-    friendly_id (5.2.4)
-      activerecord (>= 4.0.0)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     has_scope (0.7.2)
@@ -274,8 +272,8 @@ DEPENDENCIES
   chromedriver-helper
   coffee-rails (~> 4.2)
   devise
-  friendly_id (~> 5.2.0)
   jbuilder (~> 2.5)
+  kaminari
   le
   listen (>= 3.0.5, < 3.2)
   mini_magick (~> 4.3)

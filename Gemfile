@@ -85,7 +85,7 @@ gem 'le'
 gem 'activeadmin'
 
 #gem 'will_paginate'
-#gem 'kaminari'
+gem 'kaminari'
 
 # can can
 gem 'cancan'

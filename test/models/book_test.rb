@@ -2,8 +2,15 @@ require 'test_helper'
 
 class BookTest < ActiveSupport::TestCase
    test "should not save Book without title" do
-        book = Book.new
+        book = Book.new 
+        # book[:title] 
         assert_not book.save, "Saved the book without a title"
+    end
+
+    test "should not save Book without image" do
+        book = Book.new
+       # book.image = "abcdefghudjoked"
+        assert_not book.save, "Saved the book without an image"
     end
 
    

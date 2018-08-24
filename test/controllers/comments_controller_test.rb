@@ -1,8 +1,15 @@
 require 'test_helper'
 
 class CommentsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+  #Devise::Test::IntegrationHelpers
+  #include Devise::TestHelpers    
+  #Devise::Test::ControllerHelpers
+
   setup do
     @comment = comments(:one)
+    @user = users(:one)
+    sign_in @user
   end
 
   test "should get index" do
@@ -16,8 +23,10 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create comment" do
-    assert_difference('Comment.count') do
-      post comments_url, params: { comment: { body: @comment.body, book_id: @comment.book_id, commenter: @comment.commenter } }
+    assert_raises(RecordNotFound) do
+      assert_difference('Comment.count') do
+        post comments_url, params: { comment: { body: @comment.body, book_id: @comment.book_id, commenter: @comment.commenter } }
+      end
     end
 
     assert_redirected_to comment_url(Comment.last)
@@ -34,8 +43,10 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update comment" do
-    patch comment_url(@comment), params: { comment: { body: @comment.body, book_id: @comment.book_id, commenter: @comment.commenter } }
-    assert_redirected_to comment_url(@comment)
+    assert_raises(RecordNotFound) do
+      patch comment_url(@comment), params: { comment: { body: @comment.body, book_id: @comment.book_id, commenter: @comment.commenter } }
+      assert_redirected_to comment_url(@comment)
+    end
   end
 
   test "should destroy comment" do
