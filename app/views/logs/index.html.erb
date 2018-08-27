@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Logs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Description</th>
+      <th>Book</th>
+      <th>Date </th>
+      <th colspan="4"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @logs.each do |log| %>
+      <tr>
+        <td><%= log.user.email %></td>
+        <td><%= log.description %></td>
+        <td><%= log.book.title %></td>
+        <td><%= 'on the ' + log.created_at.strftime('%FT%T').to_s %></td>
+        <td><%= link_to 'Show', log %></td>
+        <td><%= link_to 'Edit', edit_log_path(log) %></td>
+        <td><%= link_to 'Destroy', log, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Log', new_log_path %>
