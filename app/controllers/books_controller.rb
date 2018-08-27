@@ -7,7 +7,7 @@ class BooksController < ApplicationController
   def index
 
     #@books = Book.limit(100)
-    @books = Book.page(params[:page]).per(2)
+    @books = Book.page(params[:page]).per(10)
     @books = @books.joins(:categories).where(categories: {id: params[:category][:category_id]})  if params.include? :category
     @books = @books.where("title LIKE ? ",  "%#{params[:search]}%" )  if params.include? :search
     @categories = Category.limit(100).pluck(:name, :id)
