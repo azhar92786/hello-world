@@ -84,7 +84,7 @@ class BooksController < ApplicationController
 
   def borrow
    @book = Book.find(params[:book_id])
-   @book.borrower.nil? ? @book.update_attribute(:borrower, current_user.email) : @book.update_attribute(:borrower, nil)
+   @book.borrower.nil? ? [@book.update_attribute(:borrower, current_user.email), UserMailer.with(user: current_user, book: @book).welcome_email.deliver_later ] : @book.update_attribute(:borrower, nil)
    redirect_to books_url
   end
 
