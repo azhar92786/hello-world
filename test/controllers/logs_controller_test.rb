@@ -7,9 +7,9 @@ class LogsControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @log = logs(:one)
-    # @request.env["devise.mapping"] = Devise.mappings[:user]
-    # sign_in FactoryBot.create(:user)
     @user = users(:one)
+    @book = books(:one)
+    @book2 = books(:two)
     sign_in @user
   end
 
@@ -23,12 +23,18 @@ class LogsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should create log" do
+  test "should create log after book is borrowed" do
     assert_difference('Log.count') do
-      post logs_url, params: { log: { book_id: @log.book_id, description: @log.description, user_id: @log.user_id } }
+      patch book_borrow_path(@book), params: {book: {borrower: 'azharpremier@gmail.com'}}
     end
+    assert_redirected_to books_path
+  end
 
-    assert_redirected_to log_url(Log.last)
+  test "should create log after book is returned" do
+    assert_difference('Log.count') do
+      patch book_return_path(@book2), params: {book: {borrower: nil}}
+    end
+    assert_redirected_to books_path
   end
 
   test "should show log" do

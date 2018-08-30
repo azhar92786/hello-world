@@ -1,3 +1,8 @@
+
+<% if user_signed_in? %>
+  curl -X GET --header 'Authorization: Bearer <%= JWTWrapper.encode({ user_id: current_user.id }) %>' 'http://localhost:3000/api/v1/yada_ya'
+<% end %>
+
 <h2>Filter by categories</h2>
 <% if false %> 
     <ul>
@@ -46,7 +51,7 @@
         <td><%= link_to 'Edit', edit_book_path(book) %></td>
         <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <td><%= button_to "Borrow", book_borrow_path(book), method: :patch if !book.borrower %></td>
-        <td><%= button_to "Return", book_return_path(book), method: :patch if book.borrower == current_user.email%></td>
+        <td><%= button_to "Return", book_borrow_path(book), method: :patch if book.borrower == current_user.email%></td>
         <td><%= button_to "Enquire with borrower", book_email_query_path(book), method: :get if (book.borrower != current_user.email) && (book.borrower != nil)%></td>        </tr>
     <% end %>
   </tbody>

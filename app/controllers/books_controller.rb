@@ -74,19 +74,17 @@ class BooksController < ApplicationController
     end
   end
 
+  # def borrow
+  #  @book = Book.find(params[:book_id])
+  #  @book.update_attribute(:borrower, current_user.email)
+  #  UserMailer.with(user: current_user, book: @book).welcome_email.deliver_later    # Tell the UserMailer to send a welcome email after save   
+  #  #ManageBorrowersJob.perform_later 
+  #  redirect_to books_url
+  # end
+
   def borrow
    @book = Book.find(params[:book_id])
-   @book.update_attribute(:borrower, current_user.email)
-   # Tell the UserMailer to send a welcome email after save
-   UserMailer.with(user: current_user, book: @book).welcome_email.deliver_later
-   
-   ManageBorrowersJob.perform_later 
-   redirect_to books_url
-  end
-
-  def return
-   @book = Book.find(params[:book_id])
-   @book.update_attribute(:borrower, nil)
+   @book.borrower.nil? ? @book.update_attribute(:borrower, current_user.email) : @book.update_attribute(:borrower, nil)
    redirect_to books_url
   end
 

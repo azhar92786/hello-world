@@ -93,6 +93,15 @@ gem 'cancan'
 # #for 'friendly' URLs
 # gem 'friendly_id', '~> 5.2.0'
 
+#gem for token based authentication 
+ gem 'jwt'
+# gem 'simple_command'
+#gem 'devise-jwt'
+
+#gem for securely store passwords and accesss keys
+gem 'dotenv-rails', groups: [:development, :test]
+
+
 
 
 

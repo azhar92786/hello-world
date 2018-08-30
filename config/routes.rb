@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-   devise_for :admin_users, ActiveAdmin::Devise.config
+  devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   devise_for :users
   devise_scope :user do
@@ -14,7 +14,6 @@ Rails.application.routes.draw do
     get :book_by_category  
     get :email_query  
     patch :borrow
-    patch :return
   end
 
   namespace :api do

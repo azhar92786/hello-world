@@ -12,15 +12,15 @@ class Book < ApplicationRecord
     # default_scope { order(id: :desc) } 
     
     #constants...
-    LIMIT = 100
+    LIMIT = 100  
 
-  
+    after_update :create_log, if: :saved_change_to_borrower?
 
-    after_update do |book|
+    def create_log
         if borrower.nil?
-            Log.create(user_id: User.current.id, description: "Returned" , book_id: book.id.to_i)
+            Log.create(user_id: User.current.id, description: "Returned" , book_id: id)
         else
-            Log.create(user_id: User.current.id, description: "Borrowed" , book_id: book.id.to_i)
+            Log.create(user_id: User.current.id, description: "Borrowed" , book_id: id)
         end
     end
 

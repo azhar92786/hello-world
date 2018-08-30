@@ -4,10 +4,10 @@ one:
   title: bk1
   description: MyText
   image: MyString.jpeg
-  borrower: MyString
+  borrower:
 
 two:
   title: bk2
   description: MyText
   image: MyString.jpeg
-  borrower: MyString
+  borrower: borrower1

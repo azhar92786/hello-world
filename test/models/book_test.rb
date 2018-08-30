@@ -13,6 +13,11 @@ class BookTest < ActiveSupport::TestCase
         assert_not book.save, "Saved the book without an image"
     end
 
+    test "should save book" do
+        book = books(:one)
+        assert book.save
+    end
+
    
     test "should report error" do
         # some_undefined_variable is not defined elsewhere in the test case
