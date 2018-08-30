@@ -1,6 +1,8 @@
 class Api::V1::BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
   # skip_before_action :authenticate_user!
+  protect_from_forgery with: :null_session
+
   
 
   # GET /books
