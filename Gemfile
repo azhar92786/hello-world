@@ -67,7 +67,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 #Image management
 gem 'carrierwave', '~> 0.10.0'
-#gem 'cloudinary'
+gem 'cloudinary'
 
 
 gem 'mini_magick', '~> 4.3'
