@@ -7,7 +7,9 @@ require 'rails/all'
 Bundler.require(*Rails.groups)
 
 #DOTenv
-Dotenv::Railtie.load
+# if ['development', 'test'].include? ENV['RAILS_ENV']
+#   Dotenv::Railtie.load
+# end
 
 
 module Spoonlibrary

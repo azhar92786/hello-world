@@ -99,7 +99,11 @@ gem 'cancan'
 #gem 'devise-jwt'
 
 #gem for securely store passwords and accesss keys
-gem 'dotenv-rails', groups: [:development, :test]
+# gem 'dotenv-rails', groups: [:development, :test]
+#gem 'dotenv-rails', :require => 'dotenv/rails-now'
+
+
+
 
 
 
