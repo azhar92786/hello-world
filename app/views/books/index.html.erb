@@ -49,7 +49,7 @@
         <td><%= book.borrower%></td>
         <td><%= link_to 'Show', book %></td>
         <td><%= link_to 'Edit', edit_book_path(book) %></td>
-        <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure??' } %></td>
         <td><%= button_to "Borrow", book_borrow_path(book), method: :patch unless book.borrower %></td>
         <td><%= button_to "Return", book_borrow_path(book), method: :patch if user_borrowed_book?(book) %></td>
         <td><%= button_to "Enquire with borrower", book_email_query_path(book), method: :get if can_enquire_with_borrower?(book)%></td>
