@@ -1,31 +1,35 @@
+<div class="container text-center">
+    <p>
+      <strong>Title:</strong>
+      <%= @book.title %>
+    </p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @book.title %>
-</p>
+    <p>
+      <strong>Description::</strong>
+      <%= @book.description %>
+    </p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @book.description %>
-</p>
+    <p>
+      <strong>Image:</strong>
+        <%= image_tag @book.image.url %>
+    </p>
 
-<p>
-  <strong>Image:</strong>
-  <%= image_tag @book.image.url %>
-</p>
-
-<p>
-  <strong>Borrower:</strong>
-  <%= @book.borrower %>
-</p>
-
-<%= link_to 'Edit', edit_book_path(@book) %> |
-<%= link_to 'Back', books_path %>
-<td><%= link_to 'Destroy', book_path(@book), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <p>
+      <strong>Borrower:</strong>
+      <%= @book.borrower %>
+    </p>
 
 
+    <%= link_to 'Edit', edit_book_path(@book) %> 
+    <%= link_to 'Back', books_path %>
+    <td><%= link_to 'Destroy', book_path(@book), method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
-<%= render 'bookcomments', book: @book %>
+    <%= render 'bookcomments', book: @book %>
+
+</div>
+
+
+
 
 
 

@@ -102,6 +102,12 @@ gem 'cancan'
 gem 'dotenv-rails', groups: [:development, :test]
 #gem 'dotenv-rails', :require => 'dotenv/rails-now'
 
+#BOOTSTRAP
+gem 'bootstrap', '~> 4.1.3'
+gem 'jquery-rails'
+
+
+
 
 
 

@@ -5,13 +5,11 @@ class BooksController < ApplicationController
   # GET /books
   # GET /books.json
   def index
-
     #@books = Book.limit(100)
     @books = Book.page(params[:page]).per(10).order(:id)
     @books = @books.joins(:categories).where(categories: {id: params[:category][:category_id]})  if params.include? :category
     @books = @books.where("title LIKE ? ",  "%#{params[:search]}%" )  if params.include? :search
-    @categories = Category.limit(100).pluck(:name, :id)
-    
+    @categories = Category.limit(100).pluck(:name, :id)    
    end
 
   # GET /books/1
@@ -23,6 +21,11 @@ class BooksController < ApplicationController
   def new
     @book = Book.new
     @categories = Category.limit(100)
+
+    respond_to do |format|
+      format.js{}
+      format.html{}
+    end
   end
 
   # GET /books/1/edit
@@ -32,17 +35,16 @@ class BooksController < ApplicationController
   # POST /books
   # POST /books.json
   def create
-
     @book = Book.new(book_params)
     set_categories
-
+    @book.save
     respond_to do |format|
       if @book.save
-        format.html { redirect_to @book, notice: 'Book was successfully created.' }
+        format.js { redirect_to @books, notice: 'Book was successfully created.' }
         format.json { render :show, status: :created, location: @book }
       else
         @categories = Category.limit(100)
-        format.html { render :new }
+        format.js { render :new }
         format.json { render json: @book.errors, status: :unprocessable_entity }
       end
     end

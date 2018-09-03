@@ -19,6 +19,8 @@
  <%= link_to 'Edit', edit_comment_path(comment) %> 
 <% end %>
 
+<%= link_to 'Add comment',  new_book_comment_path(@book), remote: true %> 
+<div id='comment-content'></div>
 
   <h2>Add a comment:</h2>
   <%= form_with(model: [ @book, @book.comments.new], local: true) do |form| %>

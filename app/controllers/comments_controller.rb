@@ -16,6 +16,9 @@ class CommentsController < ApplicationController
   # GET /comments/new
   def new
     @comment = Comment.new
+    respond_to do |format|
+      format.js
+    end
   end
 
   # GET /comments/1/edit
