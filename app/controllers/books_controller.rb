@@ -7,7 +7,7 @@ class BooksController < ApplicationController
   def index
 
     #@books = Book.limit(100)
-    @books = Book.page(params[:page]).per(10)
+    @books = Book.page(params[:page]).per(10).order(:id)
     @books = @books.joins(:categories).where(categories: {id: params[:category][:category_id]})  if params.include? :category
     @books = @books.where("title LIKE ? ",  "%#{params[:search]}%" )  if params.include? :search
     @categories = Category.limit(100).pluck(:name, :id)
@@ -84,8 +84,10 @@ class BooksController < ApplicationController
 
   def borrow
    @book = Book.find(params[:book_id])
-   @book.borrower.nil? ? [@book.update_attribute(:borrower, current_user.email), UserMailer.with(user: current_user, book: @book).welcome_email.deliver_later ] : @book.update_attribute(:borrower, nil)
-   redirect_to books_url
+    if @book.borrow(current_user)
+      redirect_to books_url, notice: 'Book was succesfully updated'
+    end
+      #@book.borrower ? [@book.update_attribute(:borrower, current_user.email), UserMailer.with(user: current_user, book: @book).welcome_email.deliver_later ] : @book.update_attribute(:borrower, nil)
   end
 
   def email_query

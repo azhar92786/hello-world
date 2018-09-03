@@ -21,7 +21,7 @@
 
 
   <h2>Add a comment:</h2>
-  <%= form_with(model: [ @book, @book.comments.build ], local: true) do |form| %>
+  <%= form_with(model: [ @book, @book.comments.new], local: true) do |form| %>
       
       <p>
         <%= form.label :body %>

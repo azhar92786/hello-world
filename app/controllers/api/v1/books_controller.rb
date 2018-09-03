@@ -8,7 +8,7 @@ class Api::V1::BooksController < ApplicationController
   # GET /books
   # GET /books.json
   def index
-    @books = Book.limit(100)
+    @books = Book.limit(100).order(:id)
     render json: {status: 'SUCCESS', message: 'Loaded all books', data: @books}, status: :ok
   end
 
@@ -33,16 +33,19 @@ class Api::V1::BooksController < ApplicationController
     @book.categories.clear
     #set_categories
     if @book.update(book_params)
-       # format.html { redirect_to @book, notice: 'Book was successfully updated.' }
        render json: @book, status: :created, location: @book
       else
-        #format.html { render :edit }
         format.json { render json: @book.errors, status: :unprocessable_entity }
       end
    end
 
 
-  
+   def borrow
+    @book = Book.find(params[:book_id])
+    @book.borrower.nil? ? [@book.update_attribute(:borrower, params[:borrower]), UserMailer.with(user: params[:borrower], book: @book).welcome_email.deliver_later ] : @book.update_attribute(:borrower, nil)
+    render json: {status: 'SUCCESS', message: 'Loaded all books', data: @book}, status: :ok
+   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
