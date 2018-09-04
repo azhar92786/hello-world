@@ -15,13 +15,16 @@ class BooksController < ApplicationController
   # GET /books/1
   # GET /books/1.json
   def show
+    respond_to do |format|
+      format.js{}
+      format.html{}
+    end
   end
 
   # GET /books/new
   def new
     @book = Book.new
     @categories = Category.limit(100)
-
     respond_to do |format|
       format.js{}
       format.html{}
