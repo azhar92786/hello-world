@@ -30,6 +30,10 @@ class BooksController < ApplicationController
 
   # GET /books/1/edit
   def edit
+    respond_to do |format|
+      format.js{}
+      format.html{}
+    end
   end
 
   # POST /books
@@ -40,7 +44,7 @@ class BooksController < ApplicationController
     @book.save
     respond_to do |format|
       if @book.save
-        format.js { redirect_to @books, notice: 'Book was successfully created.' }
+        format.js { }
         format.json { render :show, status: :created, location: @book }
       else
         @categories = Category.limit(100)
@@ -57,7 +61,8 @@ class BooksController < ApplicationController
     set_categories
     respond_to do |format|
       if @book.update(book_params)
-        format.html { redirect_to @book, notice: 'Book was successfully updated.' }
+        format.js {flash[:notice] = "successfully updated book!"}
+        # format.html { redirect_to @book, notice: 'Book was successfully updated.' }
         format.json { render :show, status:ok, location: @book }
       else
         format.html { render :edit }
