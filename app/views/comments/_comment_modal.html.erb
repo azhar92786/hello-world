@@ -1,0 +1,31 @@
+<div id="post-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <div>
+        <p id="notice"><%= notice %></p>
+
+        <p>
+            <strong>Commenter:</strong>
+            <%= @comment.commenter %>
+        </p>
+        
+        <p>
+            <strong>Body:</strong>
+            <%= @comment.body %>
+        </p>
+        
+        <p>
+            <strong>Book:</strong>
+            <%= @comment.book %>
+        </p>
+        
+        <%= link_to 'Edit', edit_comment_path(@comment) %> |
+        <%= link_to 'Back', comment_path %>
+      </div>
+    </div>
+  </div>
+</div>

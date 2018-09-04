@@ -1,0 +1,12 @@
+console.log('start new.js.erb');
+$('#exampleModal').html("<%= j render 'book_modal'%>");
+$('#exampleModal').modal('show');
+
+console.log('end new.js.erb');
+
+$('#newbookform').on('submit', function() {
+  console.log('form submitted');
+  $('#exampleModal').modal('hide');
+});
+
+ 
